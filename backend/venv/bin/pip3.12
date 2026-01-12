@@ -1,4 +1,4 @@
-#!/home/manucci/Development/TaskManagement/backend/venv/bin/python
+#!/home/manucci/Development/TaskManagement/frontend/task-manager/backend/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
