@@ -1,6 +1,6 @@
 import TaskItem from "./TaskItem";
 
-export default function TaskList({ tasks, onDelete }) {
+export default function TaskList({ tasks, onDelete, onEdit}) {
   if (tasks.length === 0) {
     return <p>No tasks available</p>;
   }
@@ -8,7 +8,7 @@ export default function TaskList({ tasks, onDelete }) {
   return (
     <ul>
       {tasks.map(task => (
-        <TaskItem key={task.id} task={task} onDelete={onDelete} />
+        <TaskItem key={task.id} task={task} onDelete={onDelete} onEdit={onEdit} />
       ))}
     </ul>
   );
