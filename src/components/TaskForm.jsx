@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function TaskForm({ onCreate }) {
+export default function TaskForm({ onCreate, initialData }) {
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("pending");
+
+  useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title);
+      setStatus(initialData.status);
+    }
+  }, [initialData]);
 
   const handleSubmit = e => {
     e.preventDefault();
     onCreate({ title, status });
     setTitle("");
+    setStatus("pending");
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
-        type="text"
-        placeholder="Task title"
         value={title}
         onChange={e => setTitle(e.target.value)}
         required
@@ -26,7 +32,9 @@ export default function TaskForm({ onCreate }) {
         <option value="completed">Completed</option>
       </select>
 
-      <button type="submit">Add Task</button>
+      <button type="submit">
+        {initialData ? "Update Task" : "Add Task"}
+      </button>
     </form>
   );
 }

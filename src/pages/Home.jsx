@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchTasks, createTask, deleteTask } from "../api/tasks";
+import { fetchTasks, createTask, deleteTask, updateTask } from "../api/tasks";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 
@@ -7,6 +7,7 @@ export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [editingTask, setEditingTask] = useState(null);
 
   async function loadTasks() {
     try {
@@ -29,6 +30,16 @@ export default function Home() {
     loadTasks();
   }
 
+   async function handleEdit(task) {
+    setEditingTask(task);
+  }
+
+  async function handleUpdate(updatedData) {
+    await updateTask(editingTask.id, updatedData);
+    setEditingTask(null);
+    loadTasks();
+  }
+
   async function handleDelete(id) {
     await deleteTask(id);
     loadTasks();
@@ -38,10 +49,14 @@ export default function Home() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
-      <h1>Task Manager</h1>
-      <TaskForm onCreate={handleCreate} />
-      <TaskList tasks={tasks} onDelete={handleDelete} />
+    <div className="page">
+      <div className="content">
+      <h1>Task Management System</h1>
+      <TaskForm onCreate={editingTask ? handleUpdate : handleCreate}
+        initialData={editingTask} />
+      <TaskList tasks={tasks} onDelete={handleDelete} onEdit={handleEdit} />
+      </div>
     </div>
+    
   );
 }

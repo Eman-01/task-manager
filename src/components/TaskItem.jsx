@@ -17,7 +17,7 @@ export default function TaskItem({ task, onDelete, onEdit }) {
       <p>Status: {task.status}</p>
 
       <button onClick={() => onEdit(task)}>Update</button>
-      <button onClick={() => onDelete(task.id)}>Delete</button>
+      <button className="delete" onClick={() => onDelete(task.id)}>Delete</button>
     </li>
   );
 }
